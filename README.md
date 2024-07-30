@@ -15,6 +15,7 @@ Avant de commencer à développer, il faut installer :
 
 ## 2. Project Structure
 
+```sh
 my-springboot-app/
 ├── src/
 │ ├── main/
@@ -29,6 +30,7 @@ my-springboot-app/
 ├── Dockerfile
 ├── docker-compose.yml
 └── pom.xml
+```
 
 ## 3. Build et lancer l'application
 
