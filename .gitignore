@@ -1,0 +1,35 @@
+# Java build output
+target/
+build/
+
+# Maven-specific files
+*.log
+*.jks
+*.jar
+*.war
+
+# VSCode directories and files
+.vscode/
+.history/
+
+# IntelliJ IDEA directories and files
+.idea/
+*.iml
+
+# Eclipse directories and files
+.project
+.classpath
+.settings/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Docker and container-related files
+docker-compose.override.yml
+*.env
+
+# IDE specific files
+*.sublime-workspace
+*.sublime-project
