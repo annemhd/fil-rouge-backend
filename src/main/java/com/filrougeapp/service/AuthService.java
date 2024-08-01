@@ -32,7 +32,7 @@ public class AuthService {
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
-        user.setRole(user.getRole());
+        user.setRole(request.getRole());
 
         user = repository.save(user);
 

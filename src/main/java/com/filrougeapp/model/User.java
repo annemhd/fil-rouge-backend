@@ -86,6 +86,7 @@ public class User implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+        System.out.println("User role model : " + this.role);
     }
 
     @Override
