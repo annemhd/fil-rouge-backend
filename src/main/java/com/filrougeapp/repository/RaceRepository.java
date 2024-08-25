@@ -1,6 +1,8 @@
 package com.filrougeapp.repository;
 
 import com.filrougeapp.model.Race;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -17,4 +19,6 @@ public interface RaceRepository extends JpaRepository<Race, Integer> {
 
     // méthode pour trouver une course par la vitesse de rotation des roues. Renvoie un Optional pour gérer le cas où aucune course ne correspond
     Optional<Race> findByWheelRotationSpeed(Double wheelRotationSpeed);
+
+    List<Race> findByUserId(Integer userId);
 }
