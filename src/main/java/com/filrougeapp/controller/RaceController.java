@@ -1,7 +1,9 @@
 package com.filrougeapp.controller;
 
 import com.filrougeapp.model.Race;
+import com.filrougeapp.model.User;
 import com.filrougeapp.repository.RaceRepository;
+import com.filrougeapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,27 +18,32 @@ public class RaceController {
     @Autowired
     private RaceRepository raceRepository;
 
-    // récupérer toutes les courses (à voir avec code jason?)
+    @Autowired
+    private UserRepository userRepository;
+
     @GetMapping
     public List<Race> getAllRaces() {
         return raceRepository.findAll();
     }
 
-    // récupérer une course par ID (???peut-être qu'il faut plutôt lié avec le user)
     @GetMapping("/{id}")
     public ResponseEntity<Race> getRaceById(@PathVariable Integer id) {
         Optional<Race> race = raceRepository.findById(id);
         return race.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // créer une nouvelle course
     @PostMapping
     public ResponseEntity<Race> createRace(@RequestBody Race race) {
-        Race savedRace = raceRepository.save(race);
-        return ResponseEntity.ok(savedRace);
+        Optional<User> user = userRepository.findById(race.getUser().getId());
+        if (user.isPresent()) {
+            race.setUser(user.get());
+            Race savedRace = raceRepository.save(race);
+            return ResponseEntity.ok(savedRace);
+        } else {
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
-    // mettre à jour une course existante (est-ce que c'est vrmt utile?)
     @PutMapping("/{id}")
     public ResponseEntity<Race> updateRace(@PathVariable Integer id, @RequestBody Race raceDetails) {
         return raceRepository.findById(id)
@@ -51,7 +58,6 @@ public class RaceController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // supprimer une course
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteRace(@PathVariable Integer id) {
         return raceRepository.findById(id)

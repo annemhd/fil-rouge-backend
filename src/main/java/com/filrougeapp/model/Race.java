@@ -14,30 +14,30 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "race") // spécifie que cette entité est mappée à la table "race"
+@Table(name = "race")
 public class Race {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // déclare une colonne pour stocker la vitesse moyenne d'une course
-    @Column(name = "average_speed") 
+    @Column(name = "average_speed")
     private Double averageSpeed;
 
-    // Déclare une colonne pour stocker la distance parcourue pendant une course
-    @Column(name = "distance_covered") 
+    @Column(name = "distance_covered")
     private Double distanceCovered;
 
-    // déclare une colonne pour stocker le temps passé pendant une course.
-    @Column(name = "time_spent") 
+    @Column(name = "time_spent")
     private Double timeSpent;
 
-    // déclare une colonne pour stocker la vitesse de rotation des roues pendant une course.
-    @Column(name = "wheel_rotation_speed") 
+    @Column(name = "wheel_rotation_speed")
     private Double wheelRotationSpeed;
 
-    // déclare une colonne pour stocker la date et l'heure de création de l'entité
-    @CreationTimestamp 
-    @Column(name = "created_at") 
-    private LocalDateTime createdAt; // utilise LocalDateTime pour stocker la date et l'heure
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    // relation Many-to-One avec l'utilisateur
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false) // crée une colonne "user_id" qui fera référence à l'utilisateur
+    private User user;
 }

@@ -1,7 +1,9 @@
 package com.filrougeapp.controller;
 
 import com.filrougeapp.model.User;
+import com.filrougeapp.model.Race;
 import com.filrougeapp.repository.UserRepository;
+import com.filrougeapp.repository.RaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +17,9 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RaceRepository raceRepository;
 
     @GetMapping
     public List<User> getAllUsers() {
@@ -57,4 +62,16 @@ public class UserController {
                 })
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/{id}/races")
+    public ResponseEntity<List<Race>> getRacesByUserId(@PathVariable Integer id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            // on récupère toutes les courses associées à cet utilisateur
+            List<Race> races = raceRepository.findByUserId(id);
+            return ResponseEntity.ok(races);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }    
 }
