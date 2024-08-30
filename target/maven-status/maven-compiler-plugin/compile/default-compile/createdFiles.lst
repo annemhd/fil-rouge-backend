@@ -1,0 +1,16 @@
+com/filrougeapp/model/Role.class
+com/filrougeapp/FilRougeApplication.class
+com/filrougeapp/model/AuthResponse.class
+com/filrougeapp/controller/RaceController.class
+com/filrougeapp/model/User.class
+com/filrougeapp/service/UserDetailsImp.class
+com/filrougeapp/service/JwtService.class
+com/filrougeapp/repository/UserRepository.class
+com/filrougeapp/model/Race.class
+com/filrougeapp/repository/RaceRepository.class
+com/filrougeapp/controller/UserController.class
+com/filrougeapp/model/Race$RaceBuilder.class
+com/filrougeapp/controller/AuthController.class
+com/filrougeapp/config/SecurityConfig.class
+com/filrougeapp/filter/JwtAuthFilter.class
+com/filrougeapp/service/AuthService.class

@@ -1,5 +1,4 @@
 # Java build output
-target/
 build/
 
 # Maven-specific files

@@ -1,0 +1,13 @@
+spring:
+    jpa:
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+    datasource:
+        url: jdbc:mysql://${MYSQL_HOST:localhost}:3306/fil_rouge
+        username: root
+        password: root
+    servlet:
+        multipart:
+            max-request-size: 5MB
+            max-file-size: 5MB
