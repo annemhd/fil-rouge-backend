@@ -11,7 +11,5 @@ COPY target/fil-rouge-app-1.0.0.jar /app/app.jar
 EXPOSE 8080
 
 # # Run the jar file
-# ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
 
-# Use the startup script as the entrypoint
-ENTRYPOINT ["/app/config.sh"]
