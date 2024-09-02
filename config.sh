@@ -6,4 +6,4 @@ mvn clean package
 sleep 20
 
 # Lancer l'application Spring Boot
-java -jar ./target/fil-rouge-app-1.0.0.jar
+java -jar /app/app.jar
