@@ -8,8 +8,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import jakarta.annotation.PostConstruct;
-
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -18,6 +16,7 @@ import java.nio.file.Paths;
 
 @RestController
 @RequestMapping("/images")
+@CrossOrigin(origins = "http://127.0.0.1:5500") // Allow CORS for this controller
 public class RaceImgController {
 
     private final RaceImgRepository raceImgRepository;
@@ -26,10 +25,9 @@ public class RaceImgController {
     public RaceImgController(RaceImgRepository raceImgRepository) {
         this.raceImgRepository = raceImgRepository;
     }
-
+    
     @PostConstruct
     private void init() {
-        // Create the uploads directory at application startup
         File dir = new File(UPLOADED_FOLDER);
         if (!dir.exists()) {
             dir.mkdirs();
@@ -43,15 +41,12 @@ public class RaceImgController {
         }
 
         try {
-            // File name and full path
             String fileName = StringUtils.cleanPath(file.getOriginalFilename());
             Path path = Paths.get(UPLOADED_FOLDER + fileName);
             Files.write(path, file.getBytes());
 
-            // Create the image URL
             String imageUrl = "/images/" + fileName;
 
-            // Save the URL in the database
             RaceImg raceImg = RaceImg.builder()
                     .url(imageUrl)
                     .build();
