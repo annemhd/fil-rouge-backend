@@ -37,12 +37,11 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
-                .cors(cors -> cors.configurationSource(
-                        corsConfigurationSource()))
-                .authorizeHttpRequests(req -> req.requestMatchers("/login/**",
-                        "/register/**").permitAll()
-                        .anyRequest()
-                        .authenticated())
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .authorizeHttpRequests(req -> req
+                        .requestMatchers("/login/**", "/register/**").permitAll()
+                        .requestMatchers("/users/**").authenticated()
+                        .anyRequest().authenticated())
                 .userDetailsService(userDetailsImp)
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
