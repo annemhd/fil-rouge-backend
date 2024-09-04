@@ -1,5 +1,6 @@
 package com.filrougeapp.config;
 
+// importation des différentes classes nécessaires pour configurer la sécurité dans l'application Spring
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,11 +30,13 @@ public class SecurityConfig {
     private final UserDetailsImp userDetailsImp;
     private final JwtAuthFilter authFilter;
 
+    // constructeur pour injecter les dépendances nécessaires (service utilisateur et filtre JWT)
     public SecurityConfig(UserDetailsImp userDetailsImp, JwtAuthFilter authFilter) {
         this.userDetailsImp = userDetailsImp;
         this.authFilter = authFilter;
     }
 
+    // configuration principale de la chaîne de filtres de sécurité
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(AbstractHttpConfigurer::disable)
@@ -48,21 +51,23 @@ public class SecurityConfig {
                 .build();
     }
 
+    // définit un bean pour l'encodage des mots de passe utilisant BCrypt, un algorithme de hachage sécurisé
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // fournit un bean pour le gestionnaire d'authentification, utilisé pour authentifier les utilisateurs
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
+    // configure CORS pour autoriser des origines spécifiques et certaines méthodes HTTP
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080",
-                "http://localhost:8081")); //
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080","http://localhost:8081"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         configuration.setAllowCredentials(true);
