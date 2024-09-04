@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -36,8 +38,8 @@ public class Race {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    // relation Many-to-One avec l'utilisateur
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false) // crée une colonne "user_id" qui fera référence à l'utilisateur
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    @JsonBackReference
     private User user;
 }
