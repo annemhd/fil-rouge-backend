@@ -35,10 +35,6 @@ public class User implements UserDetails {
     @Enumerated(value = EnumType.STRING)
     Role role;
 
-    // @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval =
-    // true)
-    // private List<Race> races;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Race> races;
