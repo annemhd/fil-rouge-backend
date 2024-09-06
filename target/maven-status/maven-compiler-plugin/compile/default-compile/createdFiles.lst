@@ -7,10 +7,14 @@ com/filrougeapp/service/UserDetailsImp.class
 com/filrougeapp/service/JwtService.class
 com/filrougeapp/repository/UserRepository.class
 com/filrougeapp/model/Race.class
+com/filrougeapp/repository/DocumentRepository.class
 com/filrougeapp/repository/RaceRepository.class
+com/filrougeapp/controller/DocumentsController.class
 com/filrougeapp/controller/UserController.class
+com/filrougeapp/model/Documents$DocumentsBuilder.class
 com/filrougeapp/model/Race$RaceBuilder.class
 com/filrougeapp/controller/AuthController.class
+com/filrougeapp/model/Documents.class
 com/filrougeapp/config/SecurityConfig.class
 com/filrougeapp/filter/JwtAuthFilter.class
 com/filrougeapp/service/AuthService.class

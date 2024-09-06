@@ -30,7 +30,8 @@ public class SecurityConfig {
     private final UserDetailsImp userDetailsImp;
     private final JwtAuthFilter authFilter;
 
-    // constructeur pour injecter les dépendances nécessaires (service utilisateur et filtre JWT)
+    // constructeur pour injecter les dépendances nécessaires (service utilisateur
+    // et filtre JWT)
     public SecurityConfig(UserDetailsImp userDetailsImp, JwtAuthFilter authFilter) {
         this.userDetailsImp = userDetailsImp;
         this.authFilter = authFilter;
@@ -43,6 +44,8 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(req -> req
                         .requestMatchers("/login/**", "/register/**").permitAll()
+                        .requestMatchers("/users/**").authenticated()
+                        .requestMatchers("/races/**").authenticated()
                         .anyRequest().authenticated())
                 .userDetailsService(userDetailsImp)
                 .sessionManagement(session -> session
@@ -51,23 +54,27 @@ public class SecurityConfig {
                 .build();
     }
 
-    // définit un bean pour l'encodage des mots de passe utilisant BCrypt, un algorithme de hachage sécurisé
+    // définit un bean pour l'encodage des mots de passe utilisant BCrypt, un
+    // algorithme de hachage sécurisé
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // fournit un bean pour le gestionnaire d'authentification, utilisé pour authentifier les utilisateurs
+    // fournit un bean pour le gestionnaire d'authentification, utilisé pour
+    // authentifier les utilisateurs
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
-    // configure CORS pour autoriser des origines spécifiques et certaines méthodes HTTP
+    // configure CORS pour autoriser des origines spécifiques et certaines méthodes
+    // HTTP
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:8080","http://localhost:8081"));
+        configuration.setAllowedOrigins(
+                Arrays.asList("http://localhost:3000", "http://localhost:8080", "http://localhost:8081"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         configuration.setAllowCredentials(true);
