@@ -1,12 +1,16 @@
 package com.filrougeapp.controller;
 
 import com.filrougeapp.model.User;
+import com.filrougeapp.model.Avatar;
 import com.filrougeapp.model.Race;
 import com.filrougeapp.repository.UserRepository;
+
+import io.jsonwebtoken.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Optional;
@@ -74,6 +78,33 @@ public class UserController {
             return ResponseEntity.ok(races);
         } else {
             return ResponseEntity.notFound().build();
+        }
+    }   
+    
+    @PutMapping("/{id}/avatar")
+    public ResponseEntity<User> updateUserAvatar(@PathVariable Integer id, @RequestParam("avatar") MultipartFile file) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            try {
+                // crée un nouvel objet Avatar
+                Avatar avatar = new Avatar();
+                avatar.setFileName(file.getOriginalFilename());
+                avatar.setContent(file.getBytes());
+                avatar.setUrl("/path/to/avatar/" + file.getOriginalFilename());
+    
+                // met à jour l'avatar de l'utilisateur
+                user.setAvatar(avatar);
+                userRepository.save(user);
+    
+                // renvoie l'utilisateur mis à jour avec un statut 200 (OK)
+                return ResponseEntity.ok(user);
+    
+            } catch (IOException | java.io.IOException e) {
+                return ResponseEntity.status(500).build();
+            }
+        } else {
+            return ResponseEntity.status(404).build();
         }
     }
 }

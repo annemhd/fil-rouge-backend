@@ -51,6 +51,9 @@ public class User implements UserDetails {
     @JsonManagedReference
     private List<Race> races;
 
+    @Embedded
+    private Avatar avatar;
+
     // méthode getter pour l'ID de l'utilisateur
     public Integer getId() {
         return id;
@@ -150,5 +153,10 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    //   public Avatar getAvatar() {
+    public void setAvatar(Avatar avatar2) {
+        throw new UnsupportedOperationException("Unimplemented method 'setAvatar'");
     }
 }
