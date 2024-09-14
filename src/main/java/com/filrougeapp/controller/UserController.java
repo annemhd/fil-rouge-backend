@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RestController  // indique que cette classe est un contrôleur REST
-@RequestMapping("/users")  // spécifie la route de base pour toutes les méthodes de ce contrôleur
+@RestController // indique que cette classe est un contrôleur REST
+@RequestMapping("/users") // spécifie la route de base pour toutes les méthodes de ce contrôleur
 public class UserController {
 
-    @Autowired  // injection automatique du dépôt d'utilisateurs
+    @Autowired // injection automatique du dépôt d'utilisateurs
     private UserRepository userRepository;
 
     // méthode pour récupérer tous les utilisateurs stockés dans la base de données
@@ -65,7 +65,8 @@ public class UserController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // méthode pour récupérer toutes les courses associées à un utilisateur spécifique par son ID
+    // méthode pour récupérer toutes les courses associées à un utilisateur
+    // spécifique par son ID
     @GetMapping("/{userId}/races")
     public ResponseEntity<List<Race>> getRacesByUserId(@PathVariable Integer userId) {
         Optional<User> userOptional = userRepository.findById(userId);
@@ -75,5 +76,17 @@ public class UserController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PatchMapping("/{id}/avatar/{avatar}")
+    public ResponseEntity<String> updateAvatar(@PathVariable Integer id, @PathVariable Integer avatar) {
+        // Fetch the user by ID
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("User non existant: " + id));
+
+        user.setAvatar(avatar);
+        userRepository.save(user);
+
+        return ResponseEntity.ok("Votre avatar a bien été mis à jour");
     }
 }

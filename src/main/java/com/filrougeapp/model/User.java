@@ -14,17 +14,20 @@ import jakarta.persistence.*;
 // annotation pour indiquer que cette classe est une entité JPA mappée à une table dans la base de données
 @Entity
 
-// annotation pour spécifier le nom de la table dans la base de données associée à cette entité
+// annotation pour spécifier le nom de la table dans la base de données associée
+// à cette entité
 @Table(name = "user")
 public class User implements UserDetails {
 
     // annotation pour spécifier que cet attribut est la clé primaire de l'entité
     @Id
 
-    // annotation pour spécifier que la valeur de la clé primaire sera générée automatiquement par la base de données
+    // annotation pour spécifier que la valeur de la clé primaire sera générée
+    // automatiquement par la base de données
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
-    // annotation pour définir le nom de la colonne dans la table de la base de données
+    // annotation pour définir le nom de la colonne dans la table de la base de
+    // données
     @Column(name = "id")
     Integer id;
 
@@ -40,14 +43,20 @@ public class User implements UserDetails {
     @Column(name = "password")
     String password;
 
-    // annotation pour indiquer que l'attribut est un enum stocké en tant que chaîne dans la base de données
+    // annotation pour indiquer que l'attribut est un enum stocké en tant que chaîne
+    // dans la base de données
     @Enumerated(value = EnumType.STRING)
     Role role;
 
-    // annotation pour définir une relation OneToMany avec l'entité Race, avec suppression en cascade et récupération paresseuse
+    @Column(name = "avatar")
+    Integer avatar;
+
+    // annotation pour définir une relation OneToMany avec l'entité Race, avec
+    // suppression en cascade et récupération paresseuse
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 
-    // annotation pour gérer la sérialisation JSON, évitant les boucles infinies dans les relations bidirectionnelles
+    // annotation pour gérer la sérialisation JSON, évitant les boucles infinies
+    // dans les relations bidirectionnelles
     @JsonManagedReference
     private List<Race> races;
 
@@ -112,6 +121,16 @@ public class User implements UserDetails {
         System.out.println("User role model : " + this.role);
     }
 
+    // méthode getter pour l'Id de l'avatar
+    public Integer getAvatar() {
+        return avatar;
+    }
+
+    // méthode setter pour le mot de passe
+    public void setAvatar(Integer avatar) {
+        this.avatar = avatar;
+    }
+
     // méthode getter pour la liste des courses associées à l'utilisateur
     public List<Race> getRaces() {
         return races;
@@ -122,7 +141,8 @@ public class User implements UserDetails {
         this.races = races;
     }
 
-    // méthode pour obtenir les autorités/grants de l'utilisateur (pour Spring Security)
+    // méthode pour obtenir les autorités/grants de l'utilisateur (pour Spring
+    // Security)
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
@@ -140,7 +160,8 @@ public class User implements UserDetails {
         return true;
     }
 
-    // méthode pour vérifier si les informations d'identification ne sont pas expirées (toujours vrai ici)
+    // méthode pour vérifier si les informations d'identification ne sont pas
+    // expirées (toujours vrai ici)
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
