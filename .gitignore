@@ -1,11 +1,9 @@
 # Java build output
-target/
 build/
 
 # Maven-specific files
 *.log
 *.jks
-*.jar
 *.war
 
 # VSCode directories and files
