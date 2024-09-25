@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Optional;
 
-@RestController  // indique que cette classe est un contrôleur REST
-@RequestMapping("/races")  // spécifie la route de base pour toutes les méthodes de ce contrôleur
+@RestController
+@RequestMapping("/races")
 public class RaceController {
 
     @Autowired  // injection automatique du dépôt de courses
@@ -26,7 +26,7 @@ public class RaceController {
     // méthode pour récupérer toutes les courses stockées dans la base de données
     @GetMapping
     public List<Race> getAllRaces() {
-        return raceRepository.findAll();  // récupère et retourne toutes les courses
+        return raceRepository.findAll(); 
     }
 
     // méthode pour récupérer une course spécifique par son ID
@@ -39,22 +39,17 @@ public class RaceController {
     // méthode pour créer une nouvelle course
     @PostMapping
     public ResponseEntity<?> createRace(@RequestBody Race race) {
-        // vérifie que les données de la course et l'ID de l'utilisateur associé sont valides
         if (race == null || race.getUser() == null || race.getUser().getId() == null) {
             return ResponseEntity.badRequest().body("Invalid race data or missing user ID.");
         }
 
-        // recherche l'utilisateur par son ID
         Optional<User> userOptional = userRepository.findById(race.getUser().getId());
         if (userOptional.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("User not found with ID: " + race.getUser().getId());
         }
-
-        // associe l'utilisateur trouvé à la course
         race.setUser(userOptional.get());
-
-        // sauvegarde la course dans la base de données et retourne une réponse 201 (Created)
+        
         Race savedRace = raceRepository.save(race);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedRace);
     }
