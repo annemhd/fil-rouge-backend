@@ -11,26 +11,17 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import java.time.LocalDateTime;
 
-// annotation pour générer automatiquement les méthodes getter, setter, equals, hashCode, et toString
+// annotations lombok
 @Data
-
-// annotation pour générer un constructeur sans arguments
 @NoArgsConstructor
-
-// annotation pour générer un constructeur avec tous les arguments
 @AllArgsConstructor
 
-// annotation pour générer un constructeur de construction pour la création d'instances immuables
 @Builder
-
-// annotation pour indiquer que cette classe est une entité JPA et sera mappée à une table dans la base de données
 @Entity
 
-// annotation pour spécifier le nom de la table dans la base de données à laquelle cette entité est mappée
 @Table(name = "race")
 public class Race {
 
-    // annotation pour spécifier que cet attribut est la clé primaire de l'entité
     @Id
 
     // annotation pour spécifier que la valeur de la clé primaire sera générée automatiquement par la base de données
